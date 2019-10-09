@@ -7,10 +7,11 @@
 sysversion=$(rpm -q centos-release|cut -d- -f3)
 line="-------------------------------------------------"
 
-
+//判断目录是否存在，不存在则创建
 [ -d logs ] || mkdir logs
 
-sys_check_file="logs/$(ip a show dev eth0|grep -w inet|awk '{print $2}'|awk -F '/' '{print $1}')-`date +%Y%m%d`.txt"
+//获取IP地址得到日志文件名称
+sys_check_file="logs/$(ifconfig ens33|grep -w inet|awk '{print $2}'|awk -F '/' '{print $1}')-`date +%Y%m%d`.txt"
 
 # 获取系统cpu信息
 function get_cpu_info() {
